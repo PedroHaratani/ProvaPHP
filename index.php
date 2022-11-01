@@ -1,6 +1,7 @@
 <?php
     date_default_timezone_set('America/Sao_Paulo');
     include_once "conexao.php";
+    include "Horarios.php";
 ?>
 
 <!DOCTYPE html>
@@ -15,9 +16,9 @@
     <h2>Informe os Horarios de entrada e saída</h2>
     <?php
         $dados = filter_input_array(INPUT_GET,FILTER_DEFAULT);
-        
+        $horario = new HorasTrabalho();
+        $tempoCalculado;
         if(!empty($dados['CalcHorario'])){
-            var_dump($dados);
 
             $query = "INSERT INTO horarios (entrada,saida) VALUES (:entrada,:saida)";
             $cad_horario = $conn->prepare($query);
@@ -27,7 +28,13 @@
             $cad_horario->execute();
 
             if($cad_horario->rowCount()){
-                echo "<span>Horário cadastrado com sucesso</sapan>";
+                
+                $horario -> setentrada($dados['entrada']);
+                $horario -> setsaida($dados['saida']);
+                echo $horario->VerificaHorarios();
+                $tempoCalculado = $horario -> VerificaHorarios();
+                
+
             }else {
                 echo "<span>Horário não cadastrado com sucesso</sapan>";
             }

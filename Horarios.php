@@ -36,26 +36,28 @@ class HorasTrabalho {
 
     public function VerificaHorarios() :string
     {
-        $inicio = DateTime::createFromFormat('Y-m-d H:i:s',getentrada());
-        $fim = DateTime::createFromFormat('Y-m-d H:i:s',getsaida());
+        $inicio = DateTime::createFromFormat('Y-m-d H:i:s',$entrada);
+        $fim = DateTime::createFromFormat('Y-m-d H:i:s',$saida);
         $inicioDiurno="05:00:00";
         $fimDiurno="22:00:00";
         $calcDiurno;
         $calcNoturno;
         $intervaloNoturno;
         $intervaloDiurno;
+        
 
-        if(getentrada() >= $inicioDiurno && getentrada()<$fimDiurno){
+        if($entrada >= $inicioDiurno && $entrada<$fimDiurno){
             $intervalorDiurno = $inicio->diff($saida);
-            $calcDiurno = "A quantidade de horas diurnas são: ".$intervaloDiurno;
+            $horas = ceil(($entrada->getTimeStamo() - $entrada->gettTimestamp())/24);
+            $calcDiurno = "A quantidade de horas diurnas são: ".$horas;
             
         }
-        if(getentrada() < $inicioDiurno && getentrada()>$fimDiurno){
+        if($entrada < $inicioDiurno && $entrada>$fimDiurno){
             $intervalorNoturno = $inicio->diff($saida);
             $calcNoturno = "A quantidade de horas noturnas são: ".$intervaloNoturno;
         }
         
-        return "Horas diurnas e noturnas são respectivamente:" .$intervaloDiurno .$intervaloNoturno;
+        return "Horas diurnas e noturnas são respectivamente:" .$calcDiurno .$calcNoturno;
     }
 
 }

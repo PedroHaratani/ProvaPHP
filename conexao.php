@@ -2,8 +2,8 @@
 
     $host = "localhost";
     $user = "root";
-    $pass = "";
-    $dbname = "hora_calc";
+    $pass = "123456";
+    $dbname = "horaCalc";
     $port = 3306;
 
     try {
