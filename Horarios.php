@@ -1,4 +1,5 @@
 <?php
+include_once "conexao.php";
 
 class HorasTrabalho {
     private $id = 0;
@@ -34,30 +35,41 @@ class HorasTrabalho {
     }
 
 
-    public function VerificaHorarios() :string
+    public function VerificaHorarios($ent,$sai) :string
     {
-        $inicio = DateTime::createFromFormat('Y-m-d H:i:s',$entrada);
-        $fim = DateTime::createFromFormat('Y-m-d H:i:s',$saida);
-        $inicioDiurno="05:00:00";
-        $fimDiurno="22:00:00";
-        $calcDiurno;
-        $calcNoturno;
-        $intervaloNoturno;
-        $intervaloDiurno;
-        
 
-        if($entrada >= $inicioDiurno && $entrada<$fimDiurno){
-            $intervalorDiurno = $inicio->diff($saida);
-            $horas = ceil(($entrada->getTimeStamo() - $entrada->gettTimestamp())/24);
-            $calcDiurno = "A quantidade de horas diurnas são: ".$horas;
-            
-        }
-        if($entrada < $inicioDiurno && $entrada>$fimDiurno){
-            $intervalorNoturno = $inicio->diff($saida);
-            $calcNoturno = "A quantidade de horas noturnas são: ".$intervaloNoturno;
-        }
+        $entrada;
+        $saida;
+        $hoje = date('d/m/Y');
+        $inicioDiurno= new DateTime($hoje.' 05:00:00');
+        $fimDiurno = new DateTime($hoje.'22:00:00');
+        $stringDiurna="";
+        $stringNoturna="";
         
-        return "Horas diurnas e noturnas são respectivamente:" .$calcDiurno .$calcNoturno;
+            $entrada = new DateTime (date('d/m/Y H:i:s', strtotime($ent)));
+            $saida = new DateTime (date('d/m/Y H:i:s', strtotime($sai)));
+            /*var_dump($entrada>$inicioDiurno);
+            var_dump($entrada<$inicioDiurno);
+            var_dump($saida<$fimDiurno);*/
+
+
+
+            if($entrada > $inicioDiurno)
+            {
+                $diff = $entrada->diff($fimDiurno);
+                $stringDiurna = "Horas Diurnas ".$diff->format(' %H:%I:%S')."<br/>";
+            }
+            if($saida<$fimDiurno)
+            {
+                $diff = $fimDiurno->diff($saida);
+                $stringNoturna = "Horas Noturnas ".$diff->format(' %H:%I:%S');
+            }
+            
+            return"Horas"."<br/>". $stringDiurna . $stringNoturna;
+           
+            
+
+
     }
 
 }

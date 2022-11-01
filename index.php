@@ -31,8 +31,9 @@
                 
                 $horario -> setentrada($dados['entrada']);
                 $horario -> setsaida($dados['saida']);
-                echo $horario->VerificaHorarios();
-                $tempoCalculado = $horario -> VerificaHorarios();
+                $tempoCalculado = $horario->VerificaHorarios($horario->getentrada(),$horario->getsaida());
+
+                echo $tempoCalculado;
                 
 
             }else {
@@ -44,10 +45,10 @@
 
     <form action="" method="get">
         <label>Entrada</label>
-        <input type="time" name="entrada" require>
+        <input type="datetime-local" name="entrada" require>
         <br><br>
         <label>Saída</label>
-        <input type="time" name="saida" require>
+        <input type="datetime-local" name="saida" require>
         <br><br>
         <input type="submit" value="Calcular" name="CalcHorario">
     </form>
